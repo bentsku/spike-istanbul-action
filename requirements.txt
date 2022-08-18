@@ -1,0 +1,13 @@
+attrs==22.1.0
+flake8==4.0.1
+iniconfig==1.1.1
+mccabe==0.6.1
+packaging==21.3
+pluggy==1.0.0
+py==1.11.0
+pycodestyle==2.8.0
+pyflakes==2.4.0
+pyparsing==3.0.9
+pyproject-flake8==0.0.1a5
+pytest==7.1.2
+tomli==2.0.1
