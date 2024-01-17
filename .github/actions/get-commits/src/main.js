@@ -57,7 +57,7 @@ async function run() {
         const prNumber = parsePullRequestNumber(commit.commit.message)
         // todo: return if not PR number
         // todo: build URL
-        merged.push(`PR Number${prNumber} - SHA: ${commit.sha}`)
+        merged.push(prNumber)
       }
     }
   }
@@ -100,7 +100,7 @@ async function run() {
   core.info(`Merged commits before: ${merged}`)
 
   core.setOutput("result", result);
-  core.setOutput("commits", merged)
+  core.setOutput("commits", merged.join(","))
 }
 
 run().catch(handleError);
