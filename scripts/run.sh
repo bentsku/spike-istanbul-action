@@ -1,3 +1,3 @@
 set -e
-cat requirements-400.txt
+cat requirements.txt
 # random commit
