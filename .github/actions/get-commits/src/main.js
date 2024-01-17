@@ -16,7 +16,9 @@ function handleError(err) {
 process.on("unhandledRejection", handleError);
 
 function parsePullRequestNumber(commitMessage) {
-  return ""
+  // todo: very brittle, better parsing
+  if (!commitMessage.includes("#")) return ""
+  return commitMessage.split('#').pop().split(')')[0];
 }
 
 async function run() {
@@ -52,7 +54,10 @@ async function run() {
         result = commit.sha;
         break;
       } else {
-        merged.push(`${commit.sha}-${commit.commit.message}`)
+        const prNumber = parsePullRequestNumber(commit.commit.message)
+        // todo: return if not PR number
+        // todo: build URL
+        merged.push(`PR Number${prNumber} - SHA: ${commit.sha}`)
       }
     }
   }
