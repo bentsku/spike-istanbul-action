@@ -1,3 +1,3 @@
 set -e
-cat requirements-failure-2.txt
+cat requirements.txt
 # random commit
