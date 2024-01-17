@@ -15,6 +15,10 @@ function handleError(err) {
 
 process.on("unhandledRejection", handleError);
 
+function parsePullRequestNumber(commitMessage) {
+  return ""
+}
+
 async function run() {
   const token = core.getInput("token", { required: true });
   const octokit = getOctokit(token);
