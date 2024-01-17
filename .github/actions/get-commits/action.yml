@@ -11,7 +11,7 @@ inputs:
     default: 'localstack'
   token:
     description: 'GitHub Token to use when accessing the companion repo.'
-    required: false
+    required: true
 outputs:
   result:
     description: 'The last successful commit'
