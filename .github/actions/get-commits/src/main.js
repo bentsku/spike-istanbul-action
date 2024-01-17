@@ -33,22 +33,22 @@ async function run() {
   });
 
   for await (const { data: commits } of iterator) {
-    for (const { sha } of commits) {
+    for (const commit of commits) {
       const {
         data: {check_suites: checkSuites},
       } = await octokit.rest.checks.listSuitesForRef({
         owner: context.repo.owner,
         repo: context.repo.repo,
-        ref: sha,
+        ref: commit.sha,
       });
       const success = checkSuites.find(
           (c) => c.status === "completed" && c.conclusion === "success"
       );
       if (success) {
-        result = success.head_sha;
+        result = commit.sha;
         break;
       } else {
-        merged.push(success.head_sha)
+        merged.push(commit)
       }
     }
   }
