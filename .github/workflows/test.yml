@@ -39,6 +39,7 @@ jobs:
         run: sh scripts/run.sh
 
       - name: "Get all commits"
+        if: github.ref == 'refs/heads/master'
         id: determine-get-commits
         uses: ./.github/actions/get-commits
         with:
