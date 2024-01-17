@@ -16,7 +16,7 @@ function handleError(err) {
 process.on("unhandledRejection", handleError);
 
 async function run() {
-  const token = core.getInput("github-token", { required: true });
+  const token = core.getInput("token", { required: true });
   const octokit = getOctokit(token);
 
   const branch = context.ref.replace("refs/heads/", "");
