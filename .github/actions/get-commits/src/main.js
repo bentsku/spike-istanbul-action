@@ -48,7 +48,7 @@ async function run() {
         result = commit.sha;
         break;
       } else {
-        merged.push(commit)
+        merged.push(`${commit.sha}-${commit.commit.message}`)
       }
     }
   }
