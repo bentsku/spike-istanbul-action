@@ -21,33 +21,72 @@ async function run() {
 
   const branch = context.ref.replace("refs/heads/", "");
 
-  const { data: commits } = await octokit.rest.repos.listCommits({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    sha: branch,
-  });
-  core.info(`Number of commits: ${commits.length}`);
 
   const merged = [];
   let result = "";
-  for (const { sha } of commits) {
-    const {
-      data: { check_suites: checkSuites },
-    } = await octokit.rest.checks.listSuitesForRef({
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      ref: sha,
-    });
-    const success = checkSuites.find(
-      (c) => c.status === "completed" && c.conclusion === "success"
-    );
-    if (success) {
-      result = success.head_sha;
-      break;
-    } else {
+
+  const iterator = octokit.paginate.iterator(octokit.rest.repos.listCommits, {
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    sha: branch,
+    per_page: 50,
+  });
+
+  for await (const { data: commits } of iterator) {
+    for (const { sha } of commits) {
+      const {
+        data: {check_suites: checkSuites},
+      } = await octokit.rest.checks.listSuitesForRef({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        ref: sha,
+      });
+      const success = checkSuites.find(
+          (c) => c.status === "completed" && c.conclusion === "success"
+      );
+      if (success) {
+        result = success.head_sha;
+        break;
+      } else {
         merged.push(success.head_sha)
+      }
     }
   }
+
+  // iterate through each response
+  // for await (const { data: commits } of iterator) {
+  //   for (const commit of commits) {
+  //     console.log("Issue #%d: %s", commit.sha, commit.title);
+  //   }
+  // }
+  //
+  // const { data: commits } = await octokit.rest.repos.listCommits({
+  //   owner: context.repo.owner,
+  //   repo: context.repo.repo,
+  //   sha: branch,
+  // });
+  // core.info(`Number of commits: ${commits.length}`);
+
+  // const merged = [];
+  // let result = "";
+  // for (const { sha } of commits) {
+  //   const {
+  //     data: { check_suites: checkSuites },
+  //   } = await octokit.rest.checks.listSuitesForRef({
+  //     owner: context.repo.owner,
+  //     repo: context.repo.repo,
+  //     ref: sha,
+  //   });
+  //   const success = checkSuites.find(
+  //     (c) => c.status === "completed" && c.conclusion === "success"
+  //   );
+  //   if (success) {
+  //     result = success.head_sha;
+  //     break;
+  //   } else {
+  //       merged.push(success.head_sha)
+  //   }
+  // }
   core.info(`Successful Commit: ${result}`);
   core.info(`Merged commits before: ${merged}`)
 

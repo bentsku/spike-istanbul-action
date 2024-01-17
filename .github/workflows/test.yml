@@ -40,6 +40,6 @@ jobs:
 
       - name: "Get all commits"
         id: determine-get-commits
-        uses: ./localstack-ext/.github/actions/get-commits
+        uses: ./build-me-ext/.github/actions/get-commits
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
