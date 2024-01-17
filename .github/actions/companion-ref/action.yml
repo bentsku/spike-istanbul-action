@@ -1,0 +1,22 @@
+name: "Collect all merged PR since last run"
+description: "TBD"
+inputs:
+  companionOwner:
+    description: 'Owner / Org of the companion repository.'
+    required: true
+    default: 'localstack'
+  companionRepo:
+    description: 'Companion repository.'
+    required: true
+    default: 'localstack'
+  token:
+    description: 'GitHub Token to use when accessing the companion repo.'
+    required: false
+outputs:
+  result:
+    description: 'The last successful commit'
+  commits:
+    description: 'All merged commits since last run'
+runs:
+  using: 'node16'
+  main: 'lib/index.js'
