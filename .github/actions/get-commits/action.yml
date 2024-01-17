@@ -1,5 +1,5 @@
 name: "Collect all merged PR since last run"
-description: "TBD"
+description: "TBD - fake update"
 inputs:
   companionOwner:
     description: 'Owner / Org of the companion repository.'
