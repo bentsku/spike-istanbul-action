@@ -5,7 +5,7 @@ from hubspot.crm.objects.notes import (
 import os
 from datetime import datetime, timezone
 
-api_client = HubSpot(access_token=os.environ.get("HUBSPOT_SECRET"))
+api_client = HubSpot(access_token=os.environ.get("HUBSPOT_TOKEN"))
 
 def get_open_tickets_with_linked_prs():
     tickets = api_client.crm.tickets.get_all(properties=["test_property", "hs_pipeline_stage"], archived=False)
