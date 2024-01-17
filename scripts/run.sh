@@ -1,2 +1,2 @@
 set -e
-cat requirements.txt
+cat requirements-404.txt
